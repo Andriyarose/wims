@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, redirect, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -7,15 +6,16 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, EqualTo, ValidationError
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/misha/Desktop/FLASK/instance/database.db'
-app.config['SECRET_KEY'] = 'thisisasecretkey'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SECRET_KEY'] = 'your_secret_key'
 
 db = SQLAlchemy(app)
 
-class User(db.Model, UserMixin):
+
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
-    email = db.Column(db.String(50), nullable=False, unique=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
 
 class RegisterForm(FlaskForm):
@@ -36,15 +36,22 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Email already exists. Please use a different one.')
 
 
+
 class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
+    username = StringField(
+        validators=[InputRequired(), Length(min=4, max=20)],
+        render_kw={"placeholder": "Username"},
+    )
+    password = PasswordField(
+        validators=[InputRequired(), Length(min=4, max=20)],
+        render_kw={"placeholder": "Password"},
+    )
     submit = SubmitField("Login")
 
 
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template("home.html")
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -60,14 +67,14 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
 
-    if request.method == 'POST':
+    if request.method == "POST":
         # Get the form data
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username = request.form.get("username")
+        password = request.form.get("password")
 
         # Query the User table to find the matching user
         user = User.query.filter_by(username=username).first()
@@ -77,18 +84,15 @@ def login():
             # Perform any additional actions (e.g., setting session variables)
 
             # Redirect to the dashboard or any other desired page
-            return redirect(url_for('dashboard'))
+            return redirect(url_for("dashboard"))
         else:
             # Login failed
             # You can display an error message or redirect back to the login page
-            return redirect(url_for('login'))
+            return redirect(url_for("login"))
 
-    return render_template('login.html', form=form)
+    return render_template("login.html", form=form)
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all() 
+db.create_all()
+
+if __name__ == "__main__":
     app.run(debug=True)
-
-
-        
