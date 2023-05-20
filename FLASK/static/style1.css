@@ -1,0 +1,68 @@
+    *{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    }
+
+    
+
+    body{
+        background: url("home.png");
+        background-size: cover;
+        text-decoration: none;
+        padding: 0;
+        margin: 0;
+
+     }
+
+    .container{ 
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    }
+    
+
+    button{
+    text-decoration: none;
+    font-size: 32px; font-weight: 500;
+    font-weight: 500;
+    padding: 20px;
+    margin: 30px;
+    width: 350px;
+    background: #333232;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    color: #000000;
+    box-shadow: -10px -10px 10px -1px rgba(20, 20, 20, 0.7) ,
+    10px 10px 10px -1px rgba(26, 26, 26, 0.16);
+    }
+    
+    
+
+    button.admin{
+
+        color: #2c2c2c;
+        box-shadow: 
+        inset 10px 10px 10px -1px rgba(0, 0, 0, 0.16),
+
+        inset -10px -10px 10px -1px rgba(24, 24, 24, 0.7)  ;
+        text-decoration: none;          
+    }
+
+    button:hover{
+        box-shadow: inset 10px 10px 10px -1px rgba(0, 0, 0, 0.16),
+
+                    inset -10px -10px 10px -1px rgba(17, 17, 17, 0.7) ;
+        text-decoration: none;
+    
+        
+    }
+    
+    .container a{
+        color: #000000;
+    }
+   
