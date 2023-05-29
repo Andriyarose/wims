@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>register form</title>
+
+  <!-- custom css file link  -->
+  <link rel="stylesheet" filename="{{ url_for('static', filename='style2.css') }}">
+</head>
+
+<body>
+  <form action="{{ url_for('register') }}" method="POST">
+    <h3>register now</h3>
+    {{ form.hidden_tag() }}  
+    <!-- ee line idanam -->
+    <!-- Add error messages for each field -->
+    {% if form.username.errors %}
+      <ul class="errors">
+        {% for error in form.username.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <input type="text" name="username" required placeholder="enter your name" />
+    {% if form.email.errors %}
+      <ul class="errors">
+        {% for error in form.email.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <input type="email" name="email" required placeholder="enter your email" />
+    {% if form.password.errors %}
+      <ul class="errors">
+        {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <input type="password" name="password" required placeholder="enter your password" />
+    {% if form.confirm_password.errors %}
+      <ul class="errors">
+        {% for error in form.confirm_password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <input type="password" name="confirm_password" required placeholder="confirm your password" />
+    {{ form.submit }}
+
+    <!-- Add success message if present -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="message">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- and this too -->
+  </form>
+  <p>already have an account? <a href="{{url_for('login')}}">login now</a></p>
+</body>
+
+</html>
